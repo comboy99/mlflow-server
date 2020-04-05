@@ -4,7 +4,7 @@ LABEL maintainer="Syed Salman Qadri <syed.qadri@seeloz.com>"
 
 WORKDIR /mlflow/
 
-ARG MLFLOW_VERSION=1.4.0
+ARG MLFLOW_VERSION=1.7.2
 RUN mkdir -p /mlflow/ \
   && apt-get update && apt-get -y install --no-install-recommends default-libmysqlclient-dev libpq-dev build-essential \
   && pip install \
@@ -16,11 +16,11 @@ RUN mkdir -p /mlflow/ \
     mysql
 
 EXPOSE 5000
-
 ENV BACKEND_URI /mlflow/store
 ENV ARTIFACT_ROOT /mlflow/mlflow-artifacts
-CMD echo "Artifact Root is ${ARTIFACT_ROOT}" && \
-  mlflow server \
+
+CMD echo "Artifact Root is ${ARTIFACT_ROOT}"
+CMD mlflow server \
   --backend-store-uri ${BACKEND_URI} \
   --default-artifact-root ${ARTIFACT_ROOT} \
   --host 0.0.0.0
